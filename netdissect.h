@@ -599,7 +599,8 @@ struct lladdr_info {
 };
 
 /* The printer routines. */
-
+extern void foo();
+extern void homa_print(netdissect_options *, const u_char *, u_int);
 extern void aarp_print(netdissect_options *, const u_char *, u_int);
 extern int ah_print(netdissect_options *, const u_char *);
 extern void ahcp_print(netdissect_options *, const u_char *, u_int);

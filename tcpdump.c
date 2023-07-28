@@ -1470,6 +1470,7 @@ open_interface(const char *device, netdissect_options *ndo, char *ebuf)
 int
 main(int argc, char **argv)
 {
+	foo();
 	int cnt, op, i;
 	bpf_u_int32 localnet = 0, netmask = 0;
 	char *cp, *infile, *cmdbuf, *device, *RFileName, *VFileName, *WFileName;
