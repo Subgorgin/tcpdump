@@ -51,6 +51,7 @@ const struct tok ipproto_values[] = {
     { IPPROTO_SCTP, "SCTP" },
     { IPPROTO_MOBILITY, "Mobility" },
     { IPPROTO_ETHERNET, "Ethernet" },
+	{ IPPROTO_HOMA, "Homa"},
     { 0, NULL }
 };
 
@@ -345,7 +346,7 @@ static const char *netdb_protocol_names[256] = {
 	NULL,                /* 250 (unassigned) */
 	NULL,                /* 251 (unassigned) */
 	NULL,                /* 252 (unassigned) */
-	"exptest-253",       /* 253 (Use for experimentation and testing,
+	"homa",       /* 253 (Use for experimentation and testing,
 	                      *     RFC 3692)
 	                      */
 	"exptest-254",       /* 254 (Use for experimentation and testing,

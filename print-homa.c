@@ -29,16 +29,11 @@ Copyright declaration to be declared
 #include "ip.h"
 
 
-void 
-foo()
-{
-    struct ip ip;
-    printf("%lu\n",sizeof(ip));
-}
+
 
 /* The top level routine */
 void homa_print(netdissect_options *ndo, const u_char * bp, u_int length)
 {
-    foo();
+    ND_PRINT("thevalue of vflag: %d\n",ndo->ndo_vflag);
 }
 

@@ -224,6 +224,10 @@ again:
 		ND_PRINT("no next header");
 		break;
 
+	case IPPROTO_HOMA:
+		homa_print(ndo,bp,length);
+		break;
+
 	default:
 		if (ndo->ndo_nflag==0 && (p_name = netdb_protoname(nh)) != NULL)
 			ND_PRINT(" %s", p_name);
