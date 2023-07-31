@@ -322,6 +322,7 @@ HDR = \
 	tcp.h \
 	timeval-operations.h \
 	udp.h \
+	homa.h \
 	varattrs.h
 
 TAGHDR = \
