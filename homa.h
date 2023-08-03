@@ -17,6 +17,7 @@
 #define HOMA_MAX_PRIORITYIES 8
 #define HOMA_NUM_PEER_UNACKED_IDS 5
 #define RPCID_MASK 0x0000000000000001
+#define IPV6_TC_MASK 0x0f
 
 /*
 *  The common part of header for all Homa Packet types
@@ -115,7 +116,7 @@ struct hm_data_hdr{
 struct hm_data_seg{
     nd_uint32_t hmseg_offset;
     nd_uint32_t hmseg_length; /*in bytes*/
-    struct hm_ack gmseg_ack;
+    struct hm_ack hmseg_ack;
 };
 #define HOMA_DATA_SEG_HDR_LEN 20
 
@@ -194,8 +195,8 @@ struct hm_need_ack_hdr{
 struct hm_ack_hdr{
     struct hm_common_hdr common_header;
     nd_uint16_t hmack_acknum; /*number of valid acks*/
-    struct hm_ack acks[HOMA_NUM_PEER_UNACKED_IDS];
 };
+#define HOMA_ACK_HDR_LEN 30
 
 
 

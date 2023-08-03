@@ -225,7 +225,8 @@ again:
 		break;
 
 	case IPPROTO_HOMA:
-		homa_print(ndo,bp,length);
+		/*homa_print(ndo,bp,length, ver, iph);*/
+		homa_print(ndo,bp,length,ver,iph);
 		break;
 
 	default:
