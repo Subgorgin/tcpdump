@@ -179,7 +179,6 @@ static void grant_print(netdissect_options *ndo, const u_char *bp, u_int length)
 
     ND_PRINT("(offset %u, ", offset);
     ND_PRINT("priority %u)", priority);
-
 }
 
 static void resend_print(netdissect_options *ndo, const u_char *bp, u_int length)
@@ -246,7 +245,7 @@ static void ack_print(netdissect_options *ndo, const u_char *bp, u_int length)
  * todo: test priority parse for ipv6 header;
  * 
  * bp is a pointer to the first byte of homa packet
- * length is the length of homa packet
+ * length is the captured length of homa packet
  * ipv is the version of ip protocol
  * iph is the pointer to ip protocl header
 */
@@ -260,7 +259,7 @@ void homa_print(netdissect_options *ndo, const u_char * bp, u_int length , uint 
 
     if(length<HOMA_COMMON_HDR_LEN)
         nd_print_trunc(ndo);
-    ND_PRINT("Homa, ");
+    ND_PRINT("Homa ");
     hm_common = (const struct hm_common_hdr *)bp;
     type = common_header_print(ndo,hm_common,ipv,iph);
     
