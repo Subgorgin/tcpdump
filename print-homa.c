@@ -68,7 +68,7 @@ static int common_header_print(netdissect_options *ndo, const struct hm_common_h
         else if(ipv==6)
         {
             ip6 = (const struct ip6_hdr *)iph;
-            priority = (GET_U_1(ip6->ip6_ctlun.ip6_un2_vfc)&IPV6_TC_MASK)>1;
+            priority = (GET_U_1(ip6->ip6_ctlun.ip6_un2_vfc)&IPV6_TC_MASK);
             ND_PRINT("Priority %u, ", priority);
         }
         else 
