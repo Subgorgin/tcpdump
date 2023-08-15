@@ -76,10 +76,8 @@ static int common_header_print(netdissect_options *ndo, const struct hm_common_h
             return -1;
         }
     }
-    if(ndo->ndo_nflag)
-        ND_PRINT("%u > %u ",sport,dport);
-    else 
-        ND_PRINT("%s > %s ",tcpport_string(ndo,sport),tcpport_string(ndo,dport));
+    
+    ND_PRINT("%u > %u ",sport,dport);
 
     ND_PRINT("%s, ",tok2str(hm_pkt_types, "UNKONWN", type));
     if(!ndo->ndo_qflag)
