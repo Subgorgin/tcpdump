@@ -147,10 +147,7 @@ static void data_print(netdissect_options *ndo, const u_char *bp, u_int length)
             {
                 ND_PRINT("(ACK ");
                 ND_PRINT("RPCid %llu, ",ack_rpcid);
-                if(ndo->ndo_nflag)
-                    ND_PRINT("%u > %u ", ack_clientprot, ack_serverport);
-                else
-                    ND_PRINT("%s > %s ", tcpport_string(ndo,ack_clientprot),tcpport_string(ndo,ack_serverport));
+                ND_PRINT("%u > %u ", ack_clientprot, ack_serverport);
                 ND_PRINT(")");
             }
             ND_PRINT("] ");
@@ -220,15 +217,34 @@ static void ack_print(netdissect_options *ndo, const u_char *bp, u_int length)
         if(ack_rpcid!=0)
         {
             ND_PRINT("[RPCid %llu, ",ack_rpcid);
-            if(ndo->ndo_nflag)
-                ND_PRINT("%u > %u]", ack_clientport, ack_serverport);
-            else 
-                ND_PRINT("%s > %s]", tcpport_string(ndo,ack_clientport), tcpport_string(ndo,ack_serverport));
+            ND_PRINT("%u > %u]", ack_clientport, ack_serverport);
         }
         num_acks--;
         length -=HOMA_ACK_LEN;
         hm_ack ++;
     }
+
+}
+
+static void cutoff_print(netdissect_options *ndo, const u_char *bp, u_int length)
+{
+    const struct hm_cutoffs_hdr * hm_cutoffs_hdr;
+    uint16_t cutoff_version;
+    
+
+    if(length<HOMA_CUTOFFS_LEN)
+        nd_print_trunc(ndo);
+    
+    hm_cutoffs_hdr = (const struct hm_cutoffs_hdr *)bp;
+    cutoff_version = GET_BE_U_2(hm_cutoffs_hdr->hmcut_version);
+    
+    
+    ND_PRINT("(cutoff version %d, ", cutoff_version);
+    for(int i=0; i<HOMA_MAX_PRIORITYIES; i++)
+    {
+        ND_PRINT("[priority %d:cutoff %d]", i, GET_BE_U_4(hm_cutoffs_hdr->hmcut_cutoffs[i]));
+    }
+    ND_PRINT(")");
 
 }
 
@@ -271,41 +287,43 @@ void homa_print(netdissect_options *ndo, const u_char * bp, u_int length , uint 
     { 
         switch(type){
             case HOMA_DATA:
-            /* finished */
+            /* finished and tested */
             data_print(ndo,bp,length);
             break;
 
             case HOMA_GRANT:
-            /* finished but not test yet*/
+            /* finished and tested*/
             grant_print(ndo,bp,length);
             break;
 
             case HOMA_RESEND:
-            /* finished but not test yet*/
+            /* finished and tested*/
             resend_print(ndo,bp,length);
             break;
 
             case HOMA_UNKONWN:
-            /*finished but not test yet*/
+            /*finished and tested*/
             break;
 
             case HOMA_BUSY:
-            /*finished but not test yet*/
+            /*finished and tested*/
             break; 
 
-            case HOMA_CUTOFFS: 
+            case HOMA_CUTOFFS:
+            /*finished but not tested*/
+            cutoff_print(ndo,bp,length); 
             break;
 
             case HOMA_FREEZE: 
-            /*finished but not test yet*/
+            /*finished and tested*/
             break; 
 
             case HOMA_NEED_ACK: 
-            /*finished*/
+            /*finished and tested*/
             break;
 
             case HOMA_ACK: 
-            /*finished but not test yet*/
+            /*finished and tested*/
             ack_print(ndo,bp,length);
             break;
 
@@ -317,7 +335,6 @@ void homa_print(netdissect_options *ndo, const u_char * bp, u_int length , uint 
             return;
 
         }
-
 
     }
 
