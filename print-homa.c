@@ -230,15 +230,13 @@ static void cutoff_print(netdissect_options *ndo, const u_char *bp, u_int length
 {
     const struct hm_cutoffs_hdr * hm_cutoffs_hdr;
     uint16_t cutoff_version;
-    
 
     if(length<HOMA_CUTOFFS_LEN)
         nd_print_trunc(ndo);
     
     hm_cutoffs_hdr = (const struct hm_cutoffs_hdr *)bp;
     cutoff_version = GET_BE_U_2(hm_cutoffs_hdr->hmcut_version);
-    
-    
+
     ND_PRINT("(cutoff version %d, ", cutoff_version);
     for(int i=0; i<HOMA_MAX_PRIORITYIES; i++)
     {
@@ -335,12 +333,6 @@ void homa_print(netdissect_options *ndo, const u_char * bp, u_int length , uint 
             return;
 
         }
-
-    }
-
-
-    
-
-    
+    }    
 }
 
